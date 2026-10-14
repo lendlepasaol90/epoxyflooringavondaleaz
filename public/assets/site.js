@@ -108,3 +108,40 @@
     var rt; window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(function(){ size(); if (reduce) draw(); }, 150); });
   }
 })();
+
+// gallery lightbox
+(function(){
+  var lb = document.getElementById('lightbox');
+  if (!lb) return;
+  var items = [].slice.call(document.querySelectorAll('.g-item'));
+  var img = lb.querySelector('img'), cap = lb.querySelector('figcaption'), count = lb.querySelector('.lb-count');
+  var idx = 0, lastFocus = null, sx = null;
+  function show(i){
+    idx = (i + items.length) % items.length;
+    var a = items[idx], src = a.querySelector('img');
+    img.style.animation = 'none'; void img.offsetWidth; img.style.animation = '';
+    img.src = a.getAttribute('data-webp'); img.alt = src.alt;
+    img.onerror = function(){ img.onerror = null; img.src = a.getAttribute('href'); };
+    cap.textContent = a.getAttribute('data-cap');
+    count.textContent = (idx + 1) + ' / ' + items.length;
+  }
+  function open(i){ lastFocus = document.activeElement; lb.hidden = false; document.body.style.overflow = 'hidden'; show(i); lb.querySelector('.lb-close').focus(); }
+  function close(){ lb.hidden = true; document.body.style.overflow = ''; if (lastFocus) lastFocus.focus(); }
+  items.forEach(function(a, i){ a.addEventListener('click', function(e){ e.preventDefault(); open(i); }); });
+  lb.querySelector('.lb-close').addEventListener('click', close);
+  lb.querySelector('.lb-prev').addEventListener('click', function(){ show(idx - 1); });
+  lb.querySelector('.lb-next').addEventListener('click', function(){ show(idx + 1); });
+  lb.addEventListener('click', function(e){ if (e.target === lb) close(); });
+  document.addEventListener('keydown', function(e){
+    if (lb.hidden) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') show(idx - 1);
+    else if (e.key === 'ArrowRight') show(idx + 1);
+  });
+  lb.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});
+  lb.addEventListener('touchend', function(e){
+    if (sx === null) return;
+    var dx = e.changedTouches[0].clientX - sx; sx = null;
+    if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1));
+  });
+})();

@@ -56,6 +56,63 @@ def norm(s):
 
 BY_NAME = {norm(s['name']): s for s in SVC.values()}
 
+IMGS = {m['id']: m for m in json.load(open(os.path.join(ROOT, 'images.json')))}
+PHOTO_DIR = '/assets/img/photos/'
+PAGE_IMAGES = {}  # page path -> list of image ids, for the image sitemap
+# service number -> (overview photo, in-article photo)
+SERVICE_PHOTOS = {
+    '01': ('garage', 'autoshop'), '02': ('loft', 'selflevel'), '03': ('office', 'autoshop'),
+    '04': ('warehouse', 'spikeroll'), '05': ('patio', 'squeegee'), '06': ('flake', 'garage'),
+    '07': ('install', 'trowel'), '08': ('parking', 'pit'), '09': ('metallic', 'loft'),
+}
+
+
+def img_url(m, kind='jpg'):
+    return PHOTO_DIR + m['file'] + ('.jpg' if kind == 'jpg' else f'-{kind}.webp')
+
+
+def pic(m, sizes='(max-width: 1020px) 100vw, 560px', eager=False):
+    h = round(1200 / m['ratio'])
+    load = 'fetchpriority="high"' if eager else 'loading="lazy"'
+    return (f'<picture><source type="image/webp" srcset="{img_url(m, 800)} 800w, {img_url(m, 1600)} 1600w" sizes="{sizes}">'
+            f'<img src="{img_url(m)}" width="1200" height="{h}" alt="{html.escape(m["alt"])}" title="{html.escape(m["caption"])}" {load} decoding="async"></picture>')
+
+
+def photo(mid, cls='photo has-img', extra=''):
+    m = IMGS[mid]
+    return f'<figure class="{cls}"{extra}>{pic(m)}<figcaption>{esc(m["caption"])}</figcaption></figure>'
+
+
+def gallery(ids, heading, lead):
+    items = ''.join(
+        f'<a class="g-item reveal" href="{img_url(IMGS[i])}" data-webp="{img_url(IMGS[i], 1600)}" data-cap="{html.escape(IMGS[i]["caption"])}">'
+        f'{pic(IMGS[i], sizes="(max-width: 600px) 100vw, (max-width: 1020px) 50vw, 380px")}'
+        f'<span class="g-cap">{esc(IMGS[i]["caption"])}</span></a>'
+        for i in ids)
+    return f'''
+<section id="gallery">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="eyebrow reveal">Gallery</span><h2 class="h2 reveal">{esc(heading)}</h2></div>
+      <p class="lead reveal" style="max-width:46ch">{esc(lead)}</p>
+    </div>
+    <div class="gallery">{items}</div>
+  </div>
+  <div class="lb" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lb-btn lb-close" aria-label="Close">&times;</button>
+    <button class="lb-btn lb-prev" aria-label="Previous image">&#8249;</button>
+    <figure class="lb-fig"><img alt=""><figcaption></figcaption></figure>
+    <button class="lb-btn lb-next" aria-label="Next image">&#8250;</button>
+    <span class="lb-count"></span>
+  </div>
+</section>
+'''
+
+
+def related_ids(num, n=12):
+    ids = list(IMGS)
+    return sorted(ids, key=lambda i: (num not in IMGS[i]['tags'], IMGS[i]['tags'].index(num) if num in IMGS[i]['tags'] else 9, ids.index(i)))[:n]
+
 
 def esc(s):
     return html.escape(s, quote=False)
@@ -71,7 +128,7 @@ B = BUSINESS
 CUR = ' aria-current="page"'
 
 
-def head(title, desc, path):
+def head(title, desc, path, og=None):
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -91,7 +148,7 @@ def head(title, desc, path):
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta property="og:image" content="{B['domain']}/favicon-512.png">
+<meta property="og:image" content="{B['domain'] + (og or '/favicon-512.png')}">
 <meta name="theme-color" content="#ff6a13">
 <style>body{{margin:0}}img{{max-width:100%}}[hidden]{{display:none!important}}</style>
 </head>
@@ -236,7 +293,9 @@ def service_page(s):
     faqs = pairs(secs['Frequently Asked Questions']['items'])
 
     blocks, toc = [], []
-    for n in body_names:
+    for bi, n in enumerate(body_names):
+        if bi == 4:
+            blocks.append(photo(SERVICE_PHOTOS[s['num']][1], 'photo wide has-img reveal'))
         bid = slugify(n)
         toc.append(f'<li><a href="#{bid}">{esc(n)}</a></li>')
         cls = 'block callout reveal' if n in CALLOUTS else 'block reveal'
@@ -260,8 +319,11 @@ def service_page(s):
     ready = secs['Ready to Discuss Your Floor?']
     ready_p = [t.replace(' Visit epoxyflooringavondaleaz.com to learn more or inquire about your project.', '') for k, t in ready['items'] if k == 'p']
 
+    gal_ids = related_ids(s['num'])
+    main_img = IMGS[SERVICE_PHOTOS[s['num']][0]]
+    PAGE_IMAGES[s['href']] = list(dict.fromkeys(list(SERVICE_PHOTOS[s['num']]) + gal_ids))
     jsonld = [
-        {'@context': 'https://schema.org', '@type': 'Service', 'name': h1, 'serviceType': s['name'],
+        {'@context': 'https://schema.org', '@type': 'Service', 'image': [B['domain'] + img_url(IMGS[i]) for i in SERVICE_PHOTOS[s['num']]], 'name': h1, 'serviceType': s['name'],
          'areaServed': {'@type': 'City', 'name': 'Avondale, AZ'},
          'provider': {'@type': 'LocalBusiness', 'name': B['name'], 'telephone': B['phone'], 'email': B['email'],
                       'url': B['domain'], 'address': {'@type': 'PostalAddress', 'addressLocality': 'Avondale', 'addressRegion': 'AZ', 'postalCode': '85323', 'addressCountry': 'US'}},
@@ -273,7 +335,7 @@ def service_page(s):
             {'@type': 'ListItem', 'position': 2, 'name': s['name'], 'item': B['domain'] + s['href']}]},
     ]
 
-    page = head(seo['SEO Title'], seo['Meta Description'], s['href']) + '<div id="progress" aria-hidden="true"></div>\n' + header(s['num']) + f'''
+    page = head(seo['SEO Title'], seo['Meta Description'], s['href'], img_url(main_img)) + '<div id="progress" aria-hidden="true"></div>\n' + header(s['num']) + f'''
 <main id="top">
 <section class="hero page-hero">
   <canvas id="flakes" aria-hidden="true"></canvas>
@@ -302,7 +364,7 @@ def service_page(s):
       <div class="prose reveal">{paras(pro_text)}</div>
     </div>
     <div class="photo-wrap reveal">
-      <div class="photo tall"><span>Photo · {esc(s['name'])}</span></div>
+      {photo(SERVICE_PHOTOS[s['num']][0], 'photo tall has-img')}
       <div class="badge">Prep first. Coating second. That order is the whole job.</div>
     </div>
   </div>
@@ -354,6 +416,7 @@ def service_page(s):
   </div>
 </section>
 
+{gallery(gal_ids, s['name'] + ' gallery', 'Finishes, systems and installation steps related to ' + s['name'].lower() + '. Select a photo to view it larger.')}
 <section class="services" id="related">
   <div class="wrap">
     <div class="sec-head" style="margin-bottom:0">
@@ -390,9 +453,16 @@ def home_page():
     main = main.replace('<a class="btn btn-primary" href="#estimate">Price My Garage', f'<a class="btn btn-primary" href="{SVC["01"]["href"]}">Garage Floor Coatings')
     main = main.replace('<form class="form-card"', '<form class="form-card lead-form" data-ok="We received your request and will call you back soon."')
     main = main.replace('<form class="form-card reveal"', '<form class="form-card reveal lead-form" data-ok="Your estimate request is in. We will be in touch within one business day."')
+    main = main.replace('<div class="photo tall"><span>Photo · Finished garage floor</span></div>', photo('autoshop', 'photo tall has-img'))
+    main = main.replace('<div class="photo reveal"><span>Photo · Flake garage floor</span></div>', photo('garage', 'photo has-img reveal'))
+    main = main.replace('<div class="photo reveal"><span>Photo · Commercial floor</span></div>', photo('office', 'photo has-img reveal'))
+    main = main.replace('<div class="photo reveal"><span>Photo · Diamond grinding</span></div>', photo('selflevel', 'photo has-img reveal'))
+    assert 'Photo ·' not in main
+    main = main.replace('<section class="cta" id="estimate">', gallery(list(IMGS), 'Epoxy floor finishes and installations', 'Garage, commercial, warehouse and decorative floor coatings, plus a look at how a seamless floor is installed. Select a photo to view it larger.') + '<section class="cta" id="estimate">', 1)
+    PAGE_IMAGES['/'] = list(IMGS)
     main = main.replace('(623) 555-0148', B['phone']).replace('tel:+16235550148', 'tel:' + B['phone_href']).replace('hello@epoxyflooringavondaleaz.com', B['email'])
     page = head('Epoxy Flooring Avondale AZ | Garage & Commercial Floor Coatings',
-                'Garage, residential, commercial and warehouse epoxy flooring in Avondale, AZ. Flake, metallic, polyaspartic and polyurea floor coatings.', '/') + header('home') + main + tail([
+                'Garage, residential, commercial and warehouse epoxy flooring in Avondale, AZ. Flake, metallic, polyaspartic and polyurea floor coatings.', '/', img_url(IMGS['autoshop'])) + header('home') + main + tail([
         {'@context': 'https://schema.org', '@type': 'LocalBusiness', 'name': B['name'], 'telephone': B['phone'], 'email': B['email'], 'url': B['domain'], 'logo': B['domain'] + '/assets/img/logo-600.png', 'image': B['domain'] + '/favicon-512.png',
          'address': {'@type': 'PostalAddress', 'addressLocality': 'Avondale', 'addressRegion': 'AZ', 'postalCode': '85323', 'addressCountry': 'US'}}])
     open(os.path.join(PUBLIC, 'index.html'), 'w').write(page)
@@ -412,8 +482,11 @@ def not_found():
 
 def sitemap():
     urls = ['/'] + [s['href'] for s in SVC.values()]
-    xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(
-        f'  <url><loc>{B["domain"]}{u}</loc></url>\n' for u in urls) + '</urlset>\n'
+    def entry(u):
+        imgs = ''.join(f'<image:image><image:loc>{B["domain"]}{img_url(IMGS[i])}</image:loc></image:image>' for i in PAGE_IMAGES.get(u, []))
+        return f'  <url><loc>{B["domain"]}{u}</loc>{imgs}</url>\n'
+    xml = ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n'
+           + ''.join(entry(u) for u in urls) + '</urlset>\n')
     open(os.path.join(PUBLIC, 'sitemap.xml'), 'w').write(xml)
     open(os.path.join(PUBLIC, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\nSitemap: {B["domain"]}/sitemap.xml\n')
 

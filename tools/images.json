@@ -1,0 +1,271 @@
+[
+ {
+  "id": "patio",
+  "src": "078c6e8a-image.jpg",
+  "file": "coated-concrete-patio-outdoor-seating",
+  "alt": "Coated outdoor concrete patio with a bistro table and two chairs in bright sun",
+  "caption": "Outdoor concrete with a sun-ready coating system",
+  "tags": [
+   "05"
+  ],
+  "w": 2576,
+  "h": 1717,
+  "ratio": 1.5003
+ },
+ {
+  "id": "flake",
+  "src": "5fa48d57-image.jpg",
+  "file": "decorative-flake-epoxy-color-samples",
+  "alt": "Decorative flake epoxy samples in black and light gray multicolor chip blends",
+  "caption": "Flake and chip blends for decorative floors",
+  "tags": [
+   "06",
+   "01",
+   "02"
+  ],
+  "w": 1714,
+  "h": 2576,
+  "ratio": 0.6654
+ },
+ {
+  "id": "metallic",
+  "src": "0fbd0c08-image.jpg",
+  "file": "metallic-epoxy-floor-blue-silver-swirl",
+  "alt": "Close-up of a blue and silver metallic epoxy floor finish with swirling movement",
+  "caption": "Metallic epoxy with layered blue and silver movement",
+  "tags": [
+   "09",
+   "02"
+  ],
+  "w": 2576,
+  "h": 1712,
+  "ratio": 1.5047
+ },
+ {
+  "id": "selflevel",
+  "src": "a6527bea-image.jpg",
+  "file": "self-leveling-epoxy-coating-application",
+  "alt": "Installer spreading a self-leveling epoxy coating over prepared concrete inside a home",
+  "caption": "Spreading a self-leveling body coat over a prepared slab",
+  "tags": [
+   "02",
+   "07"
+  ],
+  "w": 2576,
+  "h": 1720,
+  "ratio": 1.4977
+ },
+ {
+  "id": "parking",
+  "src": "0623f610-image.jpg",
+  "file": "parking-garage-floor-coating-traffic-striping",
+  "alt": "Parking garage with a gloss floor coating, yellow traffic lines and marked parking stalls",
+  "caption": "Coated parking deck with traffic and stall striping",
+  "tags": [
+   "08",
+   "03",
+   "04"
+  ],
+  "w": 2576,
+  "h": 1791,
+  "ratio": 1.4383
+ },
+ {
+  "id": "office",
+  "src": "a161bfa5-image.jpg",
+  "file": "commercial-office-epoxy-floor-line-markings",
+  "alt": "Open-plan office with a gray epoxy floor and red and yellow line markings",
+  "caption": "Commercial floor with color-zoned walkways",
+  "tags": [
+   "03"
+  ],
+  "w": 2576,
+  "h": 1717,
+  "ratio": 1.5003
+ },
+ {
+  "id": "squeegee",
+  "src": "51c7d771-image.jpg",
+  "file": "epoxy-squeegee-spreading-coating-concrete",
+  "alt": "Notched squeegee spreading taupe epoxy across ground concrete",
+  "caption": "Gauge squeegee setting the coating thickness",
+  "tags": [
+   "02",
+   "07"
+  ],
+  "w": 2280,
+  "h": 2576,
+  "ratio": 0.8851
+ },
+ {
+  "id": "crew",
+  "src": "7ef8e5d7-image.jpg",
+  "file": "epoxy-floor-crew-spiked-shoes-squeegee",
+  "alt": "Floor coating crew in spiked shoes spreading a glossy epoxy layer",
+  "caption": "Crew working wet coating in spiked shoes",
+  "tags": [
+   "04",
+   "03"
+  ],
+  "w": 2576,
+  "h": 1720,
+  "ratio": 1.4977
+ },
+ {
+  "id": "garage",
+  "src": "3c56db46-image.jpg",
+  "file": "garage-floor-coating-flake-broadcast",
+  "alt": "Garage floor coating being rolled onto concrete with a decorative flake broadcast in progress",
+  "caption": "Base coat and flake broadcast in a home garage",
+  "tags": [
+   "01",
+   "06",
+   "02"
+  ],
+  "w": 2576,
+  "h": 1932,
+  "ratio": 1.3333
+ },
+ {
+  "id": "pour",
+  "src": "425fcdc7-image.jpg",
+  "file": "pouring-epoxy-resin-concrete-floor",
+  "alt": "Installer pouring yellow epoxy resin from a pail onto a concrete floor",
+  "caption": "Pouring mixed resin for a seamless floor",
+  "tags": [
+   "04",
+   "03"
+  ],
+  "w": 2576,
+  "h": 1751,
+  "ratio": 1.4712
+ },
+ {
+  "id": "autoshop",
+  "src": "a9b24ebb-image.jpg",
+  "file": "automotive-shop-high-gloss-epoxy-floor",
+  "alt": "Automotive service shop with a white high-gloss epoxy floor and vehicle lifts",
+  "caption": "High-gloss floor in an auto service bay",
+  "tags": [
+   "03",
+   "01",
+   "08"
+  ],
+  "w": 2576,
+  "h": 1718,
+  "ratio": 1.4994
+ },
+ {
+  "id": "warehouse",
+  "src": "94731b91-image.jpg",
+  "file": "warehouse-epoxy-floor-overhead-doors",
+  "alt": "Warehouse with a smooth gray epoxy floor reflecting the overhead loading doors",
+  "caption": "Warehouse floor ready for racking and forklift traffic",
+  "tags": [
+   "04"
+  ],
+  "w": 2576,
+  "h": 1717,
+  "ratio": 1.5003
+ },
+ {
+  "id": "trowel",
+  "src": "e4db9efc-image.jpg",
+  "file": "epoxy-coating-hand-trowel-closeup",
+  "alt": "Gloved hands troweling a gray epoxy coating in curved passes",
+  "caption": "Hand-troweling edges and details",
+  "tags": [
+   "07",
+   "08"
+  ],
+  "w": 2576,
+  "h": 1717,
+  "ratio": 1.5003
+ },
+ {
+  "id": "install",
+  "src": "caddba04-image.jpg",
+  "file": "professional-epoxy-floor-installation",
+  "alt": "Epoxy installer squeegeeing a reflective floor coating in warm light",
+  "caption": "Leveling a high-gloss coating",
+  "tags": [
+   "07",
+   "03"
+  ],
+  "w": 2576,
+  "h": 1720,
+  "ratio": 1.4977
+ },
+ {
+  "id": "pit",
+  "src": "36c0df29-image.jpg",
+  "file": "shop-floor-epoxy-coating-service-pit",
+  "alt": "Installer applying gray epoxy beside a service pit on a prepared concrete slab",
+  "caption": "Coating a shop floor around a service pit",
+  "tags": [
+   "08",
+   "03",
+   "04"
+  ],
+  "w": 2576,
+  "h": 1718,
+  "ratio": 1.4994
+ },
+ {
+  "id": "hangar",
+  "src": "b0d78d40-image.jpg",
+  "file": "aircraft-hangar-blue-epoxy-floor",
+  "alt": "Aircraft hangar with a bright blue epoxy floor and two small planes",
+  "caption": "Large-area hangar floor in a solid color",
+  "tags": [
+   "04",
+   "08"
+  ],
+  "w": 2576,
+  "h": 1717,
+  "ratio": 1.5003
+ },
+ {
+  "id": "loft",
+  "src": "64b3be76-image.jpg",
+  "file": "residential-loft-gray-epoxy-floor",
+  "alt": "Loft space with a glossy gray epoxy floor and dark wood columns",
+  "caption": "Gray gloss floor in a converted loft",
+  "tags": [
+   "02",
+   "09"
+  ],
+  "w": 2576,
+  "h": 1717,
+  "ratio": 1.5003
+ },
+ {
+  "id": "spikeroll",
+  "src": "8cc52efd-image.jpg",
+  "file": "industrial-epoxy-floor-spike-roller",
+  "alt": "Worker using a spiked roller to release air from a fresh industrial epoxy floor",
+  "caption": "Spike-rolling to release trapped air",
+  "tags": [
+   "04",
+   "07"
+  ],
+  "w": 2576,
+  "h": 1613,
+  "ratio": 1.597
+ },
+ {
+  "id": "lightblue",
+  "src": "/mnt/user-data/uploads/applying-new-epoxy-coating-to-concrete-floor-2026-09-23-12-00-29-utc.jpg",
+  "file": "troweling-light-blue-epoxy-coating",
+  "alt": "Installer troweling a light blue epoxy coating onto a concrete floor",
+  "caption": "Spreading a light-colored coating by hand",
+  "tags": [
+   "08",
+   "07",
+   "02"
+  ],
+  "w": 8192,
+  "h": 4491,
+  "ratio": 1.8241
+ }
+]
