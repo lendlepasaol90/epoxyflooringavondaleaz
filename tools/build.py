@@ -87,6 +87,12 @@ def head(title, desc, path):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:image" content="{B['domain']}/favicon-512.png">
+<meta name="theme-color" content="#ff6a13">
 <style>body{{margin:0}}img{{max-width:100%}}[hidden]{{display:none!important}}</style>
 </head>
 <body>
@@ -104,8 +110,7 @@ def header(active=None):
 
 <header class="nav" id="nav"><div class="wrap">
   <a class="logo" href="/" aria-label="{B['name']} home">
-    <span class="logo-mark">LOGO</span>
-    <span><b>Epoxy Flooring</b><small>Avondale · AZ</small></span>
+    <picture><source type="image/webp" srcset="/assets/img/logo-300.webp 1x, /assets/img/logo-600.webp 2x"><img class="logo-img" src="/assets/img/logo-300.png" srcset="/assets/img/logo-600.png 2x" width="300" height="135" alt="{B['name']}"></picture>
   </a>
   <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
   <ul class="menu" id="menu">
@@ -127,7 +132,7 @@ def footer():
 <footer><div class="wrap">
   <div class="foot">
     <div>
-      <a class="logo" href="/"><span class="logo-mark" style="border-color:var(--orange)">LOGO</span><span><b>Epoxy Flooring</b><small>Avondale · AZ</small></span></a>
+      <a class="logo" href="/"><img class="logo-badge" src="/assets/img/badge-96.png" width="48" height="48" alt=""><span><b>Epoxy Flooring</b><small>Avondale · AZ</small></span></a>
       <p>Garage, residential, commercial and warehouse floor coatings for Avondale and the West Valley.</p>
     </div>
     <div><h4>Services</h4><ul>{links}</ul></div>
@@ -388,7 +393,7 @@ def home_page():
     main = main.replace('(623) 555-0148', B['phone']).replace('tel:+16235550148', 'tel:' + B['phone_href']).replace('hello@epoxyflooringavondaleaz.com', B['email'])
     page = head('Epoxy Flooring Avondale AZ | Garage & Commercial Floor Coatings',
                 'Garage, residential, commercial and warehouse epoxy flooring in Avondale, AZ. Flake, metallic, polyaspartic and polyurea floor coatings.', '/') + header('home') + main + tail([
-        {'@context': 'https://schema.org', '@type': 'LocalBusiness', 'name': B['name'], 'telephone': B['phone'], 'email': B['email'], 'url': B['domain'],
+        {'@context': 'https://schema.org', '@type': 'LocalBusiness', 'name': B['name'], 'telephone': B['phone'], 'email': B['email'], 'url': B['domain'], 'logo': B['domain'] + '/assets/img/logo-600.png', 'image': B['domain'] + '/favicon-512.png',
          'address': {'@type': 'PostalAddress', 'addressLocality': 'Avondale', 'addressRegion': 'AZ', 'postalCode': '85323', 'addressCountry': 'US'}}])
     open(os.path.join(PUBLIC, 'index.html'), 'w').write(page)
 
