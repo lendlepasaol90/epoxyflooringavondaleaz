@@ -378,3 +378,18 @@ footer{background:var(--band);color:var(--on-band);padding-block:64px 32px}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .nav .logo{background:#fff;border-radius:12px;padding:4px 10px}}
 :root[data-theme="dark"] .nav .logo{background:#fff;border-radius:12px;padding:4px 10px}
 @media (max-width:820px){.logo-img{height:46px}}
+
+/* ---------- coating system comparison ---------- */
+.systems{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.sys{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px;display:grid;gap:14px;align-content:start;text-decoration:none;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .35s}
+.sys:hover{transform:translateY(-6px);border-color:var(--orange);box-shadow:0 26px 50px -30px rgba(120,45,0,.5)}
+.sys h3{font-size:24px;font-weight:800}
+.sys dl{margin:0;display:grid;gap:10px;padding-block:14px;border-block:1px solid var(--line)}
+.sys dt{font:500 11.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--orange-deep)}
+.sys dd{margin:2px 0 0;font-size:15px;font-weight:500}
+.sys p{color:var(--muted);font-size:15px}
+.sys .more{font-weight:600;color:var(--orange-deep);display:inline-flex;gap:8px;align-items:center}
+.sys .more::after{content:"→";transition:transform .3s}
+.sys:hover .more::after{transform:translateX(5px)}
+@media (max-width:1020px){.systems,#arizona .trio{grid-template-columns:1fr 1fr!important}}
+@media (max-width:600px){.systems,#arizona .trio{grid-template-columns:1fr!important}}
